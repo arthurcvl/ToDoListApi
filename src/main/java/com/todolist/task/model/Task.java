@@ -2,6 +2,7 @@ package com.todolist.task.model;
 
 import com.todolist.task.enums.TaskPriority;
 import com.todolist.task.enums.TaskState;
+import com.todolist.user.model.User;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -34,6 +35,10 @@ public class Task {
     @Column(name = "task_priority")
     @Enumerated(EnumType.ORDINAL)
     private TaskPriority taskPriority;
+
+    @ManyToOne()
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
 
 
 

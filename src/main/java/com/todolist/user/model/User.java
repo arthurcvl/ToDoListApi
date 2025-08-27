@@ -4,6 +4,7 @@ package com.todolist.user.model;
 import com.todolist.task.model.Task;
 import com.todolist.user.enums.UserRole;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -27,9 +28,8 @@ public class User implements UserDetails {
 
     private String login;
 
-    //TODO -> adicionar um email e uma validação pra ele, alem de tratamento de exceção pra esse cenario
-    //String email
-
+    @Email
+    private String email;
 
     private String password;
 

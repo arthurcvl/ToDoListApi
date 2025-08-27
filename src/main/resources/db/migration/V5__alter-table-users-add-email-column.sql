@@ -1,1 +1,1 @@
-
+ALTER TABLE users ADD user_email VARCHAR(45) NOT NULL;

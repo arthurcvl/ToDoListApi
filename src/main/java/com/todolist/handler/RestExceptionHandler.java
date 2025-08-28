@@ -2,7 +2,9 @@ package com.todolist.handler;
 
 
 import com.todolist.exceptions.BadRequestException;
+import com.todolist.exceptions.UserNotFoundException;
 import com.todolist.exceptions.details.BadRequestExceptionDetails;
+import com.todolist.exceptions.details.UserNotFoundExceptionDetails;
 import com.todolist.exceptions.details.ValidationExceptionDetails;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
@@ -44,4 +46,16 @@ public class RestExceptionHandler {
                 .build(), HttpStatus.BAD_REQUEST);
 
     }
+
+    @ExceptionHandler(UserNotFoundException.class)
+    ResponseEntity<UserNotFoundExceptionDetails> userNotFoundExceptionHandler(UserNotFoundException userNotFoundException){
+        return new ResponseEntity<>(UserNotFoundExceptionDetails.builder()
+                .name("User Not Found Exception")
+                .message(userNotFoundException.getMessage())
+                .time(LocalDateTime.now())
+                .login(userNotFoundException.getLogin())
+                .build(), HttpStatus.NOT_FOUND);
+    }
+
+
 }

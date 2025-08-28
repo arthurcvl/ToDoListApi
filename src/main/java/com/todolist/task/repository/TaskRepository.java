@@ -12,9 +12,13 @@ import java.util.Optional;
 
 public interface TaskRepository extends JpaRepository<Task, Long> {
 
+    //METODOS NECESSARIOS PARA O TASK SERVICE
     Page<Task> findByUser(User user, Pageable pageable);
     Optional<Task> findByUserAndId(User user, Long Id);
     //List<Task> findListOfTaskByUser(User user, Pageable pageable);
     Page<Task> findByUserAndTaskState(User user, TaskState taskState, Pageable pageable);
+
+    //METODOS NECESSARIOS PARA O EMAIL SERVICE:
+    List<Task> findByTaskState(TaskState taskState);
 
 }

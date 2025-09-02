@@ -1,0 +1,1 @@
+ALTER TABLE tasks ADD (created_at DATE NOT NULL, expires_at DATE);

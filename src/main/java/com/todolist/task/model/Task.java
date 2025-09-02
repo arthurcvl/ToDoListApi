@@ -41,12 +41,11 @@ public class Task {
     @Enumerated(EnumType.ORDINAL)
     private TaskPriority taskPriority;
 
-    //TODO -> LocalDate
-    //creation_date
+    @Column(name = "created_at")
+    private LocalDate createdAt;
 
-    //TODO -> vai ser LocalDate no lado do java e um Date no lado do MySql
-    //due_date
-
+    @Column(name = "expires_at")
+    private LocalDate expiresAt;
 
     @ManyToOne()
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = true)

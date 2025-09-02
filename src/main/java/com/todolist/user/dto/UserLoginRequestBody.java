@@ -1,4 +1,4 @@
 package com.todolist.user.dto;
 
-public record UserLoginRequestBody(String login, String password) {
+public record UserLoginRequestBody(String login, String password, String email) {
 }

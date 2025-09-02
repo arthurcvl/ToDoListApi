@@ -2,7 +2,6 @@ package com.todolist.task.controller;
 
 import com.todolist.task.dto.TaskDetailsDto;
 import com.todolist.task.enums.TaskState;
-import com.todolist.task.model.Task;
 import com.todolist.task.service.TaskService;
 import com.todolist.task.dto.TaskPostRequestBody;
 import com.todolist.task.dto.TaskPutRequestBody;
@@ -17,8 +16,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("todo")
@@ -48,7 +45,7 @@ public class TaskController {
     @GetMapping("/{id}")
     public ResponseEntity<TaskDetailsDto> findById(@PathVariable Long id,
                                          @AuthenticationPrincipal UserDetails userDetails){
-        return ResponseEntity.ok(taskService.findByIdReturnsFormattedTaskOrThrowBadRequestException(getUserByUserDetails(userDetails), id));
+        return ResponseEntity.ok(taskService.findTaskById(getUserByUserDetails(userDetails), id));
     }
 
     @PostMapping

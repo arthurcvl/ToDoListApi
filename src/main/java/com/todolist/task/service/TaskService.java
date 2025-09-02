@@ -1,18 +1,23 @@
 package com.todolist.task.service;
 
 import com.todolist.exceptions.BadRequestException;
+import com.todolist.task.dto.TaskDetailsDto;
 import com.todolist.task.enums.TaskState;
 import com.todolist.task.model.Task;
 import com.todolist.task.mapper.TaskMapper;
 import com.todolist.task.dto.TaskPostRequestBody;
 import com.todolist.task.dto.TaskPutRequestBody;
 import com.todolist.task.repository.TaskRepository;
+import com.todolist.user.model.User;
+import com.todolist.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Page;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -25,41 +30,57 @@ public class TaskService {
     //TODO -> Criar em todos os layers um findByName e etc
 
     private final TaskRepository taskRepository;
-
     //TODO -> Acho que se o pageable for null, implementar um sort padrao pro projeto idk, prob esse sort tem que ser
     // com base na prioridade
 
     //TODO -> na real acho melhor criar uma logica pra listar com base em varios tipos de atributos, porque nesse
     //caso especifico acho que é bem importante, apesar do pageable ja permitir sort
 
-    public Page<Task> getAll(Pageable pageable){
-        return taskRepository.findAll(pageable);
+
+    public Page<TaskDetailsDto> getAll(User user, Pageable pageable){
+        return taskRepository.findByUser(user, pageable)
+                .map(TaskMapper.INSTANCE::toTaskDetailsDto);
     }
 
-    public Task findByIdOrThrowBadRequestException(Long id){
-        return taskRepository.findById(id)
-                .orElseThrow(() -> new BadRequestException("Task not found!"));
+    public TaskDetailsDto findByIdReturnsFormattedTaskOrThrowBadRequestException(User user, Long id){
+        Task task = taskRepository.findByUserAndId(user, id)
+                .orElseThrow(() -> new BadRequestException("This user task was not found!"));
+        return TaskMapper.INSTANCE.toTaskDetailsDto(task);
     }
 
-    public Task save(TaskPostRequestBody taskPostRequestBody){
+    //This is used only for verification inside methods of the TaskService class
+    private Task findByIdOrThrowBadRequestException(User user, Long id){
+         return taskRepository.findByUserAndId(user, id)
+                .orElseThrow(() -> new BadRequestException("This user task was not found!"));
+
+    }
+
+    public TaskDetailsDto save(User user, TaskPostRequestBody taskPostRequestBody){
         Task task = TaskMapper.INSTANCE.toTask(taskPostRequestBody);
         task.setTaskState(TaskState.TODO);
-        return taskRepository.save(task);
+        task.setUser(user);
+        return TaskMapper.INSTANCE.toTaskDetailsDto(taskRepository.save(task));
     }
 
     //Depois pesquisar mais sobre essa "boa" pratica
-    public void update(TaskPutRequestBody taskPutRequestBody){
-        Task oldTask = findByIdOrThrowBadRequestException(taskPutRequestBody.getId());
+    public void update(User user, TaskPutRequestBody taskPutRequestBody){
+        //With this i can guarantee that the user in SecurityContextHolder and user associated with the Task are the same
+        Task oldTask = findByIdOrThrowBadRequestException(user, taskPutRequestBody.getId());
+
         Task taskTobeSaved = TaskMapper.INSTANCE.toTask(taskPutRequestBody);
         taskTobeSaved.setId(oldTask.getId());
+        taskTobeSaved.setUser(user);
         taskRepository.save(taskTobeSaved);
+        //This should work? idk
     }
 
-    public void delete(Long id){
-        taskRepository.delete(findByIdOrThrowBadRequestException(id));
+
+    public void delete(User user, Long id){
+        taskRepository.delete(findByIdOrThrowBadRequestException(user, id));
     }
 
-    public List<Task> getByTaskState(TaskState taskState) {
-        return taskRepository.findByTaskState(taskState);
+    public Page<TaskDetailsDto> getByTaskState(User user, TaskState taskState, Pageable pageable) {
+        return taskRepository.findByUserAndTaskState(user, taskState, pageable)
+                .map(TaskMapper.INSTANCE::toTaskDetailsDto);
     }
 }

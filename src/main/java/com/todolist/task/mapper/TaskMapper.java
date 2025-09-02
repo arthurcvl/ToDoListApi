@@ -1,6 +1,7 @@
 package com.todolist.task.mapper;
 
 
+import com.todolist.task.dto.TaskDetailsDto;
 import com.todolist.task.model.Task;
 import com.todolist.task.dto.TaskPostRequestBody;
 import com.todolist.task.dto.TaskPutRequestBody;
@@ -14,5 +15,6 @@ public abstract class TaskMapper {
 
     public abstract Task toTask(TaskPostRequestBody taskPostRequestBody);
     public abstract Task toTask(TaskPutRequestBody taskPutRequestBody);
+    public abstract TaskDetailsDto toTaskDetailsDto(Task task);
 
 }

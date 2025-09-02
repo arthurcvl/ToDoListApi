@@ -4,7 +4,8 @@ package com.todolist.exceptions.details;
 import lombok.Getter;
 import lombok.experimental.SuperBuilder;
 
-@Getter
 @SuperBuilder
-public class BadRequestExceptionDetails extends ExceptionDetails{
+@Getter
+public final class UserNotFoundExceptionDetails extends ExceptionDetails{
+    private String login;
 }

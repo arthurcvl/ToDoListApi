@@ -1,0 +1,60 @@
+Coisas:
+
+
+@EnableWebSecurity -> voce ganha a permisão de gerenciar o securityFilterChain
+SecurityConfigurations
+as responsabilidades dessa classe são:
+1 - Fazer alterações no filterChain -> fazendo o session management ser Stateless, controlar permisões, etc
+2 - Retornar um bean de um AuthorizationManager (função desconhecida)
+3 - Retornar um componente de um encodificador de senha BCrypt
+
+
+Header(Omitido por conter informações pessoais)
+
+Objetivo
+Busco uma oportunidade de estágio em Desenvolvimento de Software, onde eu possa aplicar e aprimorar minhas habilidades em Java, Spring Boot e desenvolvimento web (HTML, CSS, JavaScript). Sou um profissional proativo e colaborativo, com grande capacidade de aprendizado e motivado a contribuir para projetos desafiadores.
+
+Formaçao
+
+Projetos Relevantes
+
+API RESTful para Gerenciamento de Tarefas (Projeto Pessoal, 2025)
+
+Desenvolvimento de uma API RESTful completa para um sistema multi-usuário de gestão de tarefas, com foco em segurança, resiliência e automação de deploy.
+
+Implementei um sistema de segurança stateless com Spring Security e JWT, incluindo um filtro de segurança customizado para proteger todos os endpoints da API.
+
+Estruturei a camada de persistência com MySQL, modelando relacionamentos (@ManyToOne) e garantindo a evolução segura do schema do banco de dados com Flyway Migrations.
+
+Desenvolvi a lógica de negócio principal, incluindo o CRUD de tarefas e notificações por e-mail, garantindo sua robustez com testes unitários e um tratamento de exceções centralizado (RestExceptionHandler).
+
+Empacotei toda a aplicação em uma imagem Docker, garantindo um processo de deploy consistente, rápido e independente de ambiente.
+
+Stack: Java | Spring Boot | Spring Security | MySQL | Flyway | JWT | Maven | Docker | Git
+
+
+Portal para Gerenciamento de Eventos Artísticos | Projeto Acadêmico (PUC Minas, 2025)
+Colaborei em equipe no desenvolvimento de um portal web para divulgação e gerenciamento de eventos, artistas e bandas.
+
+Front-end Reativo: Fui responsável pela criação de componentes interativos com JavaScript puro (Vanilla JS) para consumo de dados via API.
+
+Colaboração Ágil: Atuei em um ambiente Scrum, utilizando Git/GitHub para controle de versão e colaboração contínua no código.
+
+Stack: HTML | CSS | JavaScript | JSONServer | Git | GitHub
+
+Habilidades
+Linguagens e Frameworks: Java, Spring Boot, SQL, HTML, CSS, JavaScript.
+Ferramentas e Tecnologias: Git, GitHub, Maven, Banco de Dados Relacional (MySQL), Bootstrap.
+Metodologias e Práticas: Scrum, Kanban, APIs RESTful, Orientação a Objetos.
+Idiomas: Inglês (Intermediário).
+
+
+
+Em relação aos JWT tokens:
+Usuario loga no /login e recebe um bearer token que dentro dele tem um .withSubject(user)
+usuario faz uma outra requisição com esse token e a partir desse .withSubject dentro dele o usuario é identificado e
+autorizado
+
+
+
+Usuario faz requisiçao para /login ->

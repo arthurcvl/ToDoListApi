@@ -13,6 +13,4 @@ COPY --from=builder /builder/extracted/application/ ./
 
 ENTRYPOINT ["java", "-jar", "application.jar"]
 
-EXPOSE 8080
-
 

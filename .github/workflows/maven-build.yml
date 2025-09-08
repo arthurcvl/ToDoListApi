@@ -19,6 +19,6 @@ jobs:
         with:
           java-version: '21'
           distribution: 'temurin'
-          cache: maven
+          cache: 'maven'
       - name: Build and test using maven
         run: mvn --batch-mode package

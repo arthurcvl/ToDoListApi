@@ -2,13 +2,16 @@ package com.todolist.handler;
 
 
 import com.todolist.exceptions.BadRequestException;
+import com.todolist.exceptions.InvalidBearerTokenException;
 import com.todolist.exceptions.UserNotFoundException;
 import com.todolist.exceptions.details.BadRequestExceptionDetails;
+import com.todolist.exceptions.details.ExceptionDetails;
 import com.todolist.exceptions.details.UserNotFoundExceptionDetails;
 import com.todolist.exceptions.details.ValidationExceptionDetails;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -55,6 +58,24 @@ public class RestExceptionHandler {
                 .time(LocalDateTime.now())
                 .login(userNotFoundException.getLogin())
                 .build(), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(InvalidBearerTokenException.class)
+    ResponseEntity<ExceptionDetails> invalidBearerTokenExceptionHandler(InvalidBearerTokenException invalidBearerTokenException){
+        return new ResponseEntity<>(ExceptionDetails.builder()
+                .name("Invalid Bearer Token Exception")
+                .message(invalidBearerTokenException.getMessage())
+                .time(LocalDateTime.now())
+                .build(), HttpStatus.UNAUTHORIZED);
+    }
+
+    @ExceptionHandler(InsufficientAuthenticationException.class)
+    ResponseEntity<ExceptionDetails> insufficientAuthenticationExceptionHandler(InsufficientAuthenticationException insufficientAuthenticationException){
+        return new ResponseEntity<>(ExceptionDetails.builder()
+                .name("The Bearer Token is Missing!")
+                .message(insufficientAuthenticationException.getMessage())
+                .time(LocalDateTime.now())
+                .build(), HttpStatus.UNAUTHORIZED);
     }
 
 

@@ -52,7 +52,7 @@ public class TokenService {
                     .getSubject();
 
         }catch (ValidationException validationException){
-            return "";
+            return null;
         }
     }
 

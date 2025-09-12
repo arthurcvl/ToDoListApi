@@ -9,6 +9,7 @@ import com.todolist.exceptions.details.ExceptionDetails;
 import com.todolist.exceptions.details.UserNotFoundExceptionDetails;
 import com.todolist.exceptions.details.ValidationExceptionDetails;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.InsufficientAuthenticationException;
@@ -76,6 +77,15 @@ public class RestExceptionHandler {
                 .message(insufficientAuthenticationException.getMessage())
                 .time(LocalDateTime.now())
                 .build(), HttpStatus.UNAUTHORIZED);
+    }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    ResponseEntity<ExceptionDetails> dataIntegrityViolationExceptionHandler(DataIntegrityViolationException dataIntegrityViolationException){
+        return new ResponseEntity<>(ExceptionDetails.builder()
+                .name("You tried to create an invalid object!")
+                .message(dataIntegrityViolationException.getMessage())
+                .time(LocalDateTime.now())
+                .build(), HttpStatus.BAD_REQUEST);
     }
 
 

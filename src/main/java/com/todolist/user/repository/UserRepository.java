@@ -1,6 +1,8 @@
 package com.todolist.user.repository;
 
 import com.todolist.user.model.User;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -10,5 +12,5 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     UserDetails findByLogin(String login);
     Optional<User> findUserByLogin(String login);
-
+    Optional<User> findUserByEmail(String email);
 }

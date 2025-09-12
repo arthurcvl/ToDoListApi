@@ -8,7 +8,9 @@ import com.todolist.user.dto.UserResponseDto;
 import com.todolist.user.mapper.UserMapper;
 import com.todolist.user.model.User;
 import com.todolist.user.repository.UserRepository;
+import com.todolist.user.service.UserService;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,19 +26,12 @@ import java.io.UnsupportedEncodingException;
 
 @RestController
 @RequestMapping("auth")
+@RequiredArgsConstructor
 public class AuthorizationController {
 
-    @Autowired
-    AuthenticationManager authenticationManager;
-
-    @Autowired
-    TokenService tokenService;
-
-    @Autowired
-    UserRepository userRepository;
-
-    @Autowired
-    BCryptPasswordEncoder passwordEncoder;
+    private final AuthenticationManager authenticationManager;
+    private final TokenService tokenService;
+    private final UserService userService;
 
 
     @PostMapping("/login")
@@ -50,13 +45,7 @@ public class AuthorizationController {
 
     @PostMapping("/register")
     ResponseEntity<UserResponseDto> register(@RequestBody @Valid UserRegisterRequestBody userRegisterRequestBody){
-        User user = UserMapper.INSTANCE.toUser(userRegisterRequestBody);
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        User savedUser = userRepository.save(user);
-
-        UserResponseDto userResponseDto = UserMapper.INSTANCE.toUserResponseDto(savedUser);
-
-        return new ResponseEntity<>(userResponseDto, HttpStatus.CREATED);
+        return new ResponseEntity<>(userService.save(userRegisterRequestBody), HttpStatus.CREATED);
     }
 
 

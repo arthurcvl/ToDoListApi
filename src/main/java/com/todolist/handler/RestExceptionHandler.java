@@ -37,11 +37,11 @@ public class RestExceptionHandler {
     ResponseEntity<ValidationExceptionDetails> methodArgumentNotValidExceptionHandler(MethodArgumentNotValidException e){
         List<FieldError> fieldErrors = e.getFieldErrors();
         String fields = fieldErrors.stream().map(FieldError::getField).collect(Collectors.joining(","));
-        String fieldsMessage = fieldErrors.stream().map(FieldError::getDefaultMessage).collect(Collectors.joining(","));
+        String fieldsMessage = fieldErrors.stream().map(error -> error.getField() + " " + error.getDefaultMessage()).collect(Collectors.joining(","));
 
         return new ResponseEntity<>(ValidationExceptionDetails.builder()
                 .name("Bad Request Exception")
-                .message("You commited a mistake a mistake by passing an invalid argument or" +
+                .message("You commited a mistake a mistake by passing an invalid argument or " +
                         "not passing an necessary argument")
                 .time(LocalDateTime.now())
                 .fields(fields)

@@ -39,6 +39,27 @@ Este diagrama ilustra o fluxo do pipeline de integração e entrega contínua, d
 
 ![Diagrama do Processo de Deploy Automatizado](imgs/Processo%20de%20Deploy%20Automatizado%20Diagrama.png)
 
+### Staging Environment e Swap
+Alguns prints demonstrando o uso de Staging Environment na Azure. 
+
+Production antes:
+![prod-antes](imgs/prod-antes.png)
+
+Staging antes:
+ ![staging-antes](imgs/staging-antes.png)
+
+Swap:
+![swap](imgs/swap.png)
+
+Swap bem sucedido:
+![swap-success](imgs/swap-success.png)  
+
+Production depois:
+![alt text](imgs/prod-depois.png)
+
+Staging depois:
+![alt text](imgs/staging-depois.png)
+
 ## Documentação da API
 
 A tabela abaixo resume os principais endpoints disponíveis. Para uma documentação completa e interativa, acesse o [Swagger UI](#ambiente-online-demonstração).

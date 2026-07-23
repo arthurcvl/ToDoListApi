@@ -25,7 +25,7 @@ A API está disponível para demonstração no seguinte endereço:
 
 **Documentação Interativa (Swagger):** `https://todo-app-grfrdtc3d0h9cpda.brazilsouth-01.azurewebsites.net/swagger-ui.html`
 
-*Observação: O serviço pode estar temporariamente indisponível.*
+*Observação: O serviço pode estar indisponível.*
 
 ## Arquitetura e Diagramas
 
